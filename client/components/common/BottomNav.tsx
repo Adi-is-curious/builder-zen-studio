@@ -13,6 +13,7 @@ export default function BottomNav() {
     { to: "/", label: t("home"), icon: Home },
     { to: "/report", label: t("report"), icon: PlusCircle },
     { to: "/community", label: t("community"), icon: Megaphone },
+    { to: "/redeem", label: t("rewards"), icon: Trophy },
     { to: "/profile", label: t("profile"), icon: User },
   ];
 
