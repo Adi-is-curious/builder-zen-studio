@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Redeem from "./pages/Redeem";
 import Admin from "./pages/Admin";
+import Survey from "./pages/Survey";
 
 const queryClient = new QueryClient();
 
