@@ -30,7 +30,11 @@ export default function Survey() {
         <form onSubmit={submit} className="space-y-3">
           <div>
             <label className="text-xs font-medium">Category</label>
-            <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full rounded-md border p-2">
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full rounded-md border p-2"
+            >
               <option value="general">General</option>
               <option value="sanitation">Sanitation</option>
               <option value="roads">Roads</option>
@@ -42,7 +46,12 @@ export default function Survey() {
             <label className="text-xs font-medium">Rating</label>
             <div className="flex gap-2">
               {[1, 2, 3, 4, 5].map((r) => (
-                <button key={r} type="button" onClick={() => setRating(r)} className={`rounded-md px-3 py-1 ${rating === r ? 'bg-primary text-primary-foreground' : 'border'}`}>
+                <button
+                  key={r}
+                  type="button"
+                  onClick={() => setRating(r)}
+                  className={`rounded-md px-3 py-1 ${rating === r ? "bg-primary text-primary-foreground" : "border"}`}
+                >
                   {r}
                 </button>
               ))}
@@ -51,22 +60,41 @@ export default function Survey() {
 
           <div>
             <label className="text-xs font-medium">Feedback (optional)</label>
-            <textarea value={feedback} onChange={(e) => setFeedback(e.target.value)} className="w-full rounded-md border p-2" rows={3} />
+            <textarea
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+              className="w-full rounded-md border p-2"
+              rows={3}
+            />
           </div>
 
           <div className="flex items-center gap-2">
-            <button className="rounded-md bg-primary px-4 py-2 text-primary-foreground">Submit</button>
-            <button type="button" className="rounded-md border px-4 py-2" onClick={() => navigate(-1)}>Cancel</button>
+            <button className="rounded-md bg-primary px-4 py-2 text-primary-foreground">
+              Submit
+            </button>
+            <button
+              type="button"
+              className="rounded-md border px-4 py-2"
+              onClick={() => navigate(-1)}
+            >
+              Cancel
+            </button>
           </div>
         </form>
 
         <div>
           <h2 className="text-sm font-semibold">Recent submissions</h2>
           <div className="space-y-2 mt-2">
-            {surveys.slice(0,5).map(s => (
+            {surveys.slice(0, 5).map((s) => (
               <div key={s.id} className="rounded-md border bg-white p-3">
-                <div className="text-sm font-medium">{s.category} — {s.rating} ⭐</div>
-                {s.feedback ? <div className="text-xs text-neutral-500 mt-1">{s.feedback}</div> : null}
+                <div className="text-sm font-medium">
+                  {s.category} — {s.rating} ⭐
+                </div>
+                {s.feedback ? (
+                  <div className="text-xs text-neutral-500 mt-1">
+                    {s.feedback}
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>

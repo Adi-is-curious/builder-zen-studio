@@ -21,7 +21,12 @@ export type Issue = {
   status: "pending" | "inprogress" | "resolved";
   reporterId?: string | null;
   upvotes: string[]; // user ids
-  comments: { id: string; userId: string | null; text: string; createdAt: number }[];
+  comments: {
+    id: string;
+    userId: string | null;
+    text: string;
+    createdAt: number;
+  }[];
   createdAt: number;
 };
 
@@ -78,7 +83,14 @@ function seed(): DB {
   const db: DB = {
     users: [
       { id: "user:1", name: "Guest User", phone: "", coins: 10, trust: 1 },
-      { id: "admin:1", name: "Admin", email: "admin@gov.jh", coins: 0, trust: 10, isAdmin: true },
+      {
+        id: "admin:1",
+        name: "Admin",
+        email: "admin@gov.jh",
+        coins: 0,
+        trust: 10,
+        isAdmin: true,
+      },
     ],
     issues: [
       {
@@ -100,16 +112,50 @@ function seed(): DB {
     ],
     redemptions: [],
     rewards: [
-      { id: "reward:1", title: "Museum Pass", coins: 50, description: "One-time museum entry" },
-      { id: "reward:2", title: "E-Certificate", coins: 20, description: "Aware Citizen Certificate" },
-      { id: "reward:3", title: "Bus Pass (1 day)", coins: 100, description: "Local public transport pass" },
+      {
+        id: "reward:1",
+        title: "Museum Pass",
+        coins: 50,
+        description: "One-time museum entry",
+      },
+      {
+        id: "reward:2",
+        title: "E-Certificate",
+        coins: 20,
+        description: "Aware Citizen Certificate",
+      },
+      {
+        id: "reward:3",
+        title: "Bus Pass (1 day)",
+        coins: 100,
+        description: "Local public transport pass",
+      },
     ],
     surveys: [
-      { id: "s:1", userId: "user:1", category: "general", rating: 4, feedback: "Good response time", createdAt: Date.now() - 1000 * 60 * 60 * 24 },
+      {
+        id: "s:1",
+        userId: "user:1",
+        category: "general",
+        rating: 4,
+        feedback: "Good response time",
+        createdAt: Date.now() - 1000 * 60 * 60 * 24,
+      },
     ],
     achievements: [
-      { id: "a:1", title: "Road Fixed in Kanke", desc: "Local community validated a repair near Kanke market.", impact: "Reduced travel time by 20%", createdAt: Date.now() - 1000 * 60 * 60 * 24 * 7 },
-      { id: "a:2", title: "Streetlights Restored", desc: "Citizens reported multiple faulty lights; repairs completed.", impact: "Improved safety at night", createdAt: Date.now() - 1000 * 60 * 60 * 24 * 5 },
+      {
+        id: "a:1",
+        title: "Road Fixed in Kanke",
+        desc: "Local community validated a repair near Kanke market.",
+        impact: "Reduced travel time by 20%",
+        createdAt: Date.now() - 1000 * 60 * 60 * 24 * 7,
+      },
+      {
+        id: "a:2",
+        title: "Streetlights Restored",
+        desc: "Citizens reported multiple faulty lights; repairs completed.",
+        impact: "Improved safety at night",
+        createdAt: Date.now() - 1000 * 60 * 60 * 24 * 5,
+      },
     ],
   };
   writeDB(db);
@@ -171,14 +217,21 @@ export function addComment(issueId: string, text: string) {
   const userId = getCurrentUserId();
   const issue = db.issues.find((i) => i.id === issueId);
   if (!issue) return null;
-  const comment = { id: `c:${Date.now()}`, userId: userId ?? null, text, createdAt: Date.now() };
+  const comment = {
+    id: `c:${Date.now()}`,
+    userId: userId ?? null,
+    text,
+    createdAt: Date.now(),
+  };
   issue.comments.push(comment);
   writeDB(db);
   return comment;
 }
 
 export function listUsers(): User[] {
-  return readDB().users.slice().sort((a, b) => b.coins - a.coins);
+  return readDB()
+    .users.slice()
+    .sort((a, b) => b.coins - a.coins);
 }
 
 export function getUser(id: string): User | undefined {
@@ -189,7 +242,13 @@ export function loginWithPhone(phone: string, name?: string) {
   const db = readDB();
   let user = db.users.find((u) => u.phone === phone);
   if (!user) {
-    user = { id: `user:${Date.now()}`, name: name ?? `User ${phone}`, phone, coins: 0, trust: 1 };
+    user = {
+      id: `user:${Date.now()}`,
+      name: name ?? `User ${phone}`,
+      phone,
+      coins: 0,
+      trust: 1,
+    };
     db.users.push(user);
     writeDB(db);
   }
@@ -214,11 +273,20 @@ export function redeemReward(rewardId: string) {
   if (!reward || !user) throw new Error("Invalid reward or user");
   if (user.coins < reward.coins) throw new Error("Insufficient coins");
   user.coins -= reward.coins;
-  const redemption = { id: `red:${Date.now()}`, userId, rewardId, date: Date.now() };
+  const redemption = {
+    id: `red:${Date.now()}`,
+    userId,
+    rewardId,
+    date: Date.now(),
+  };
   db.redemptions.push(redemption);
   writeDB(db);
   // notify coins change
-  window.dispatchEvent(new CustomEvent("coins-earned", { detail: { userId, amount: -reward.coins } }));
+  window.dispatchEvent(
+    new CustomEvent("coins-earned", {
+      detail: { userId, amount: -reward.coins },
+    }),
+  );
   return redemption;
 }
 
@@ -226,7 +294,14 @@ export function addSurvey(category: string, rating: number, feedback?: string) {
   const db = readDB();
   const id = `s:${Date.now()}`;
   const userId = getCurrentUserId();
-  const s: Survey = { id, userId, category, rating, feedback, createdAt: Date.now() };
+  const s: Survey = {
+    id,
+    userId,
+    category,
+    rating,
+    feedback,
+    createdAt: Date.now(),
+  };
   db.surveys.push(s);
 
   // Simple rule: high-rated surveys create a small achievement entry
@@ -246,11 +321,15 @@ export function addSurvey(category: string, rating: number, feedback?: string) {
 }
 
 export function listSurveys(): Survey[] {
-  return readDB().surveys.slice().sort((a, b) => b.createdAt - a.createdAt);
+  return readDB()
+    .surveys.slice()
+    .sort((a, b) => b.createdAt - a.createdAt);
 }
 
 export function listAchievements(): Achievement[] {
-  return readDB().achievements.slice().sort((a, b) => b.createdAt - a.createdAt);
+  return readDB()
+    .achievements.slice()
+    .sort((a, b) => b.createdAt - a.createdAt);
 }
 
 export function listRewardsAndInventory() {
@@ -279,6 +358,8 @@ export function awardCoins(userId: string, amount: number) {
   user.coins += amount;
   writeDB(db);
   // dispatch event for UI gamification
-  window.dispatchEvent(new CustomEvent("coins-earned", { detail: { userId, amount } }));
+  window.dispatchEvent(
+    new CustomEvent("coins-earned", { detail: { userId, amount } }),
+  );
   return user;
 }

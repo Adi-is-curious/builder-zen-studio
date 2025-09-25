@@ -58,8 +58,8 @@ export default function Index() {
         s === "pending"
           ? "rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold text-amber-800"
           : s === "inprogress"
-          ? "rounded-full bg-sky-100 px-2 py-0.5 text-[10px] font-semibold text-sky-800"
-          : "rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-800"
+            ? "rounded-full bg-sky-100 px-2 py-0.5 text-[10px] font-semibold text-sky-800"
+            : "rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-800"
       }
       role="status"
       aria-label={`status-${s}`}
@@ -67,8 +67,8 @@ export default function Index() {
       {s === "pending"
         ? t("status_pending")
         : s === "inprogress"
-        ? t("status_inprogress")
-        : t("status_resolved")}
+          ? t("status_inprogress")
+          : t("status_resolved")}
     </span>
   );
 
@@ -108,13 +108,29 @@ export default function Index() {
           <div className="flex items-start justify-between gap-3">
             <div>
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center" aria-hidden>
-                  <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+                <div
+                  className="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center"
+                  aria-hidden
+                >
+                  <svg
+                    className="h-6 w-6 text-white"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    />
                   </svg>
                 </div>
                 <div>
-                  <h1 className="text-lg font-bold leading-tight">{t("welcome_title")}</h1>
+                  <h1 className="text-lg font-bold leading-tight">
+                    {t("welcome_title")}
+                  </h1>
                   <p className="mt-1 text-xs opacity-90">{t("welcome_sub")}</p>
                 </div>
               </div>
@@ -136,8 +152,12 @@ export default function Index() {
               </div>
             </div>
             <div className="hidden sm:flex sm:flex-col sm:items-end">
-              <span className="rounded-full bg-white/10 px-2 py-1 text-[11px] text-white">Official</span>
-              <span className="mt-2 text-[12px] text-white/80">Government of Jharkhand</span>
+              <span className="rounded-full bg-white/10 px-2 py-1 text-[11px] text-white">
+                Official
+              </span>
+              <span className="mt-2 text-[12px] text-white/80">
+                Government of Jharkhand
+              </span>
             </div>
           </div>
         </motion.div>
@@ -146,7 +166,9 @@ export default function Index() {
         <div>
           <div className="mb-2 flex items-center justify-between">
             <h2 className="text-sm font-semibold">{t("achievements")}</h2>
-            <Link to="/community" className="text-xs font-medium text-primary">See all</Link>
+            <Link to="/community" className="text-xs font-medium text-primary">
+              See all
+            </Link>
           </div>
 
           <div className="-mx-4 overflow-x-auto px-4">
@@ -154,21 +176,35 @@ export default function Index() {
               {achievements.map((a, idx) => (
                 <motion.article
                   key={a.id}
-                  initial={shouldReduceMotion ? undefined : { opacity: 0, y: 6 }}
-                  animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                  initial={
+                    shouldReduceMotion ? undefined : { opacity: 0, y: 6 }
+                  }
+                  animate={
+                    shouldReduceMotion ? undefined : { opacity: 1, y: 0 }
+                  }
                   transition={{ duration: 0.45 }}
-                  className={`min-w-[220px] flex-shrink-0 rounded-xl border bg-white p-3 shadow-sm ${!shouldReduceMotion ? 'ach-anim' : ''}`}
-                  style={!shouldReduceMotion ? { animationDelay: `${idx * 1.8}s` } : undefined}
+                  className={`min-w-[220px] flex-shrink-0 rounded-xl border bg-white p-3 shadow-sm ${!shouldReduceMotion ? "ach-anim" : ""}`}
+                  style={
+                    !shouldReduceMotion
+                      ? { animationDelay: `${idx * 1.8}s` }
+                      : undefined
+                  }
                   aria-labelledby={`ach-${a.id}`}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="text-sm font-semibold" id={`ach-${a.id}`}>{a.title}</div>
+                    <div className="text-sm font-semibold" id={`ach-${a.id}`}>
+                      {a.title}
+                    </div>
                     <div className="text-xs text-neutral-400">{a.impact}</div>
                   </div>
                   <div className="mt-2 text-xs text-neutral-600">{a.desc}</div>
                   <div className="mt-3 flex items-center gap-2">
-                    <button className="rounded-md border px-3 py-1 text-xs">Read</button>
-                    <button className="rounded-md bg-primary px-3 py-1 text-xs text-primary-foreground">Share</button>
+                    <button className="rounded-md border px-3 py-1 text-xs">
+                      Read
+                    </button>
+                    <button className="rounded-md bg-primary px-3 py-1 text-xs text-primary-foreground">
+                      Share
+                    </button>
                   </div>
                 </motion.article>
               ))}
@@ -179,15 +215,22 @@ export default function Index() {
         <div>
           <div className="mb-2 flex items-center justify-between">
             <h2 className="text-sm font-semibold">{t("my_issues")}</h2>
-            <Link to="/report" className="text-xs font-medium text-primary">+ {t("report_issue")}</Link>
+            <Link to="/report" className="text-xs font-medium text-primary">
+              + {t("report_issue")}
+            </Link>
           </div>
           <ul className="space-y-2">
             {issues.map((it) => (
-              <li key={it.id} className="rounded-lg border bg-white p-3 shadow-sm dark:bg-neutral-900">
+              <li
+                key={it.id}
+                className="rounded-lg border bg-white p-3 shadow-sm dark:bg-neutral-900"
+              >
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-sm font-semibold">{it.title}</div>
-                    <div className="text-xs text-neutral-500">{it.category} • {it.area}</div>
+                    <div className="text-xs text-neutral-500">
+                      {it.category} • {it.area}
+                    </div>
                   </div>
                   {statusBadge(it.status)}
                 </div>

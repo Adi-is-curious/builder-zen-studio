@@ -29,14 +29,27 @@ export default function Login() {
         <h1 className="text-lg font-semibold">Sign in / Sign up</h1>
         <div className="space-y-2">
           <label className="text-xs">Name (optional)</label>
-          <input value={name} onChange={(e) => setName(e.target.value)} className="w-full rounded-md border p-2" />
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full rounded-md border p-2"
+          />
         </div>
         <div className="space-y-2">
           <label className="text-xs">Phone</label>
-          <input value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full rounded-md border p-2" />
+          <input
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="w-full rounded-md border p-2"
+          />
         </div>
         <div className="flex gap-2">
-          <button onClick={sendOtp} className="rounded-md bg-primary px-4 py-2 text-primary-foreground">Send OTP</button>
+          <button
+            onClick={sendOtp}
+            className="rounded-md bg-primary px-4 py-2 text-primary-foreground"
+          >
+            Send OTP
+          </button>
           <button
             onClick={() => verify("000000")}
             className="rounded-md border px-4 py-2 hover:bg-neutral-50"
@@ -45,7 +58,10 @@ export default function Login() {
           </button>
         </div>
         <div>
-          <p className="text-xs text-neutral-500">This is a local OTP stub. When Supabase is connected we'll replace this with real OTP flow.</p>
+          <p className="text-xs text-neutral-500">
+            This is a local OTP stub. When Supabase is connected we'll replace
+            this with real OTP flow.
+          </p>
         </div>
       </div>
     </AppLayout>
