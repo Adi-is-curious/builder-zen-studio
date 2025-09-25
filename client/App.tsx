@@ -33,4 +33,25 @@ const App = () => (
   </QueryClientProvider>
 );
 
-createRoot(document.getElementById("root")!).render(<App />);
+(() => {
+  const container = document.getElementById("root");
+  if (!container) return;
+
+  // Avoid calling createRoot multiple times during HMR or double imports.
+  // Store the root on the container to reuse it if present.
+  const anyContainer = container as any;
+  if (anyContainer.__reactRoot) {
+    try {
+      anyContainer.__reactRoot.render(<App />);
+    } catch (e) {
+      // If render fails, recreate the root cleanly.
+      const root = createRoot(container);
+      anyContainer.__reactRoot = root;
+      root.render(<App />);
+    }
+  } else {
+    const root = createRoot(container);
+    anyContainer.__reactRoot = root;
+    root.render(<App />);
+  }
+})();
