@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Home, Megaphone, PlusCircle, User } from "lucide-react";
+import { Home, Megaphone, PlusCircle, User, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { tFor, getInitialLocale, type Locale } from "@/lib/i18n";
 import { useEffect, useState } from "react";
