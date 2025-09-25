@@ -46,7 +46,7 @@ const dictionaries: Record<Locale, Record<string, string>> = {
     report: "रिपोर्ट",
     community: "समुदाय",
     profile: "प्रोफ़ाइल",
-    report_issue: "समस्या दर्ज करें",
+    report_issue: "समस्या दर्ज करे���",
     submit_issue: "समस्या सबमिट करें",
     description: "संक्षिप्त विवरण",
     category: "श्रेणी",
@@ -72,8 +72,12 @@ const dictionaries: Record<Locale, Record<string, string>> = {
     hindi: "हिंदी",
     welcome_title: "नागरिक समस्याएँ तुरंत दर्ज करें",
     welcome_sub:
-      "झारखंड के लिए सरल, तेज़ रिपोर्टिंग — मानचित्र ���्थान और एक-टैप ट्रैकिंग सहित।",
+      "झारखंड के लि�� सरल, तेज़ रिपोर्टिंग — मानचित्र स्थान और एक-टैप ट्रैकिंग सहित।",
     view_map: "मानचित्र देखें",
+    rewards: "इनाम",
+    surveys: "सर्वे",
+    achievements: "उपलब्धियाँ",
+    official_notice: "आधिकारिक नोटिस",
   },
 };
 
