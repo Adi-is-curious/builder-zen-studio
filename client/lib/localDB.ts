@@ -25,6 +25,23 @@ export type Issue = {
   createdAt: number;
 };
 
+export type Survey = {
+  id: string;
+  userId: string | null;
+  category: string;
+  rating: number; // 1-5
+  feedback?: string;
+  createdAt: number;
+};
+
+export type Achievement = {
+  id: string;
+  title: string;
+  desc?: string;
+  impact?: string;
+  createdAt: number;
+};
+
 const STORAGE_KEY = "civicconnect:db";
 
 type DB = {
@@ -32,6 +49,8 @@ type DB = {
   issues: Issue[];
   redemptions: { id: string; userId: string; rewardId: string; date: number }[];
   rewards: { id: string; title: string; coins: number; description?: string }[];
+  surveys: Survey[];
+  achievements: Achievement[];
 };
 
 function readDB(): DB {
@@ -48,6 +67,8 @@ function readDB(): DB {
 function writeDB(db: DB) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+    // notify other windows
+    window.dispatchEvent(new Event("storage"));
   } catch (e) {
     console.error("localDB write error", e);
   }
@@ -82,6 +103,13 @@ function seed(): DB {
       { id: "reward:1", title: "Museum Pass", coins: 50, description: "One-time museum entry" },
       { id: "reward:2", title: "E-Certificate", coins: 20, description: "Aware Citizen Certificate" },
       { id: "reward:3", title: "Bus Pass (1 day)", coins: 100, description: "Local public transport pass" },
+    ],
+    surveys: [
+      { id: "s:1", userId: "user:1", category: "general", rating: 4, feedback: "Good response time", createdAt: Date.now() - 1000 * 60 * 60 * 24 },
+    ],
+    achievements: [
+      { id: "a:1", title: "Road Fixed in Kanke", desc: "Local community validated a repair near Kanke market.", impact: "Reduced travel time by 20%", createdAt: Date.now() - 1000 * 60 * 60 * 24 * 7 },
+      { id: "a:2", title: "Streetlights Restored", desc: "Citizens reported multiple faulty lights; repairs completed.", impact: "Improved safety at night", createdAt: Date.now() - 1000 * 60 * 60 * 24 * 5 },
     ],
   };
   writeDB(db);
@@ -189,7 +217,59 @@ export function redeemReward(rewardId: string) {
   const redemption = { id: `red:${Date.now()}`, userId, rewardId, date: Date.now() };
   db.redemptions.push(redemption);
   writeDB(db);
+  // notify coins change
+  window.dispatchEvent(new CustomEvent("coins-earned", { detail: { userId, amount: -reward.coins } }));
   return redemption;
+}
+
+export function addSurvey(category: string, rating: number, feedback?: string) {
+  const db = readDB();
+  const id = `s:${Date.now()}`;
+  const userId = getCurrentUserId();
+  const s: Survey = { id, userId, category, rating, feedback, createdAt: Date.now() };
+  db.surveys.push(s);
+
+  // Simple rule: high-rated surveys create a small achievement entry
+  if (rating >= 5) {
+    const ach: Achievement = {
+      id: `ach:${Date.now()}`,
+      title: `Community feedback: ${category}`,
+      desc: feedback ?? "",
+      impact: `Positive feedback received` as any,
+      createdAt: Date.now(),
+    };
+    db.achievements.push(ach);
+  }
+
+  writeDB(db);
+  return s;
+}
+
+export function listSurveys(): Survey[] {
+  return readDB().surveys.slice().sort((a, b) => b.createdAt - a.createdAt);
+}
+
+export function listAchievements(): Achievement[] {
+  return readDB().achievements.slice().sort((a, b) => b.createdAt - a.createdAt);
+}
+
+export function listRewardsAndInventory() {
+  return readDB().rewards.slice();
+}
+
+export function redeemHistoryFor(userId: string) {
+  const db = readDB();
+  return db.redemptions.filter((r) => r.userId === userId);
+}
+
+export function redeemableRewards() {
+  return readDB().rewards.slice();
+}
+
+export function redeemForUser(userId: string, rewardId: string) {
+  // wrapper
+  setCurrentUserId(userId);
+  return redeemReward(rewardId);
 }
 
 export function awardCoins(userId: string, amount: number) {
@@ -198,5 +278,7 @@ export function awardCoins(userId: string, amount: number) {
   if (!user) return null;
   user.coins += amount;
   writeDB(db);
+  // dispatch event for UI gamification
+  window.dispatchEvent(new CustomEvent("coins-earned", { detail: { userId, amount } }));
   return user;
 }
