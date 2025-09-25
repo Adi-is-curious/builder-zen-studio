@@ -24,8 +24,12 @@ export default function AppLayout({ children }: { children: ReactNode }) {
           <div className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-md bg-primary" aria-hidden />
             <div>
-              <div className="text-sm font-semibold tracking-wide text-primary uppercase">{t("app_name")}</div>
-              <div className="text-[10px] text-neutral-500">Government of Jharkhand</div>
+              <div className="text-sm font-semibold tracking-wide text-primary uppercase">
+                {t("app_name")}
+              </div>
+              <div className="text-[10px] text-neutral-500">
+                Government of Jharkhand
+              </div>
             </div>
           </div>
           <LanguageToggle key={version} />

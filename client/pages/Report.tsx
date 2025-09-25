@@ -6,18 +6,33 @@ import type { LeafletMouseEvent } from "leaflet";
 import L from "leaflet";
 
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
-const CATEGORIES = ["pothole", "garbage", "streetlight", "water", "drainage", "encroachment"] as const;
+const CATEGORIES = [
+  "pothole",
+  "garbage",
+  "streetlight",
+  "water",
+  "drainage",
+  "encroachment",
+] as const;
 
 type LatLng = { lat: number; lng: number };
 
-function LocationPicker({ value, onChange }: { value: LatLng | null; onChange: (v: LatLng) => void }) {
+function LocationPicker({
+  value,
+  onChange,
+}: {
+  value: LatLng | null;
+  onChange: (v: LatLng) => void;
+}) {
   useMapEvents({
-    click: (e: LeafletMouseEvent) => onChange({ lat: e.latlng.lat, lng: e.latlng.lng }),
+    click: (e: LeafletMouseEvent) =>
+      onChange({ lat: e.latlng.lat, lng: e.latlng.lng }),
   });
   return value ? <Marker position={[value.lat, value.lng]} /> : null;
 }
@@ -34,7 +49,7 @@ export default function Report() {
 
   const [photo, setPhoto] = useState<File | null>(null);
   const [desc, setDesc] = useState("");
-  const [cat, setCat] = useState<typeof CATEGORIES[number]>("pothole");
+  const [cat, setCat] = useState<(typeof CATEGORIES)[number]>("pothole");
   const [urgent, setUrgent] = useState(false);
   const [anon, setAnon] = useState(false);
   const [pos, setPos] = useState<LatLng | null>(null);
@@ -43,7 +58,14 @@ export default function Report() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    const payload = { photo: photo?.name ?? null, desc, category: cat, urgent, anonymous: anon, location: pos };
+    const payload = {
+      photo: photo?.name ?? null,
+      desc,
+      category: cat,
+      urgent,
+      anonymous: anon,
+      location: pos,
+    };
     console.log("submit-issue", payload);
     alert("Issue saved locally (stub). Integrate backend to persist.");
   };
@@ -64,7 +86,9 @@ export default function Report() {
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-medium" htmlFor="desc">{t("description")}</label>
+          <label className="text-xs font-medium" htmlFor="desc">
+            {t("description")}
+          </label>
           <textarea
             id="desc"
             value={desc}
@@ -76,7 +100,9 @@ export default function Report() {
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-medium" htmlFor="cat">{t("category")}</label>
+          <label className="text-xs font-medium" htmlFor="cat">
+            {t("category")}
+          </label>
           <select
             id="cat"
             value={cat}
@@ -94,7 +120,11 @@ export default function Report() {
         <div className="space-y-2">
           <label className="text-xs font-medium">{t("location")}</label>
           <div className="overflow-hidden rounded-md border">
-            <MapContainer center={[defaultCenter.lat, defaultCenter.lng]} zoom={12} className="h-56 w-full">
+            <MapContainer
+              center={[defaultCenter.lat, defaultCenter.lng]}
+              zoom={12}
+              className="h-56 w-full"
+            >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -102,21 +132,34 @@ export default function Report() {
               <LocationPicker value={pos} onChange={setPos} />
             </MapContainer>
           </div>
-          <div className="text-[11px] text-neutral-500">{t("select_on_map")}</div>
+          <div className="text-[11px] text-neutral-500">
+            {t("select_on_map")}
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <label className="flex items-center gap-2 rounded-md border bg-white p-3 text-sm dark:bg-neutral-900">
-            <input type="checkbox" checked={urgent} onChange={(e) => setUrgent(e.target.checked)} />
+            <input
+              type="checkbox"
+              checked={urgent}
+              onChange={(e) => setUrgent(e.target.checked)}
+            />
             {t("urgency")}
           </label>
           <label className="flex items-center gap-2 rounded-md border bg-white p-3 text-sm dark:bg-neutral-900">
-            <input type="checkbox" checked={anon} onChange={(e) => setAnon(e.target.checked)} />
+            <input
+              type="checkbox"
+              checked={anon}
+              onChange={(e) => setAnon(e.target.checked)}
+            />
             {t("anonymous")}
           </label>
         </div>
 
-        <button type="submit" className="w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow hover:bg-primary/90">
+        <button
+          type="submit"
+          className="w-full rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow hover:bg-primary/90"
+        >
           {t("submit_issue")}
         </button>
       </form>

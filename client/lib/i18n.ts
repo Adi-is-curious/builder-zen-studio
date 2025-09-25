@@ -32,7 +32,8 @@ const dictionaries: Record<Locale, Record<string, string>> = {
     english: "English",
     hindi: "Hindi",
     welcome_title: "Report civic issues quickly",
-    welcome_sub: "Simple, fast reporting for Jharkhand with map location and one-tap status tracking.",
+    welcome_sub:
+      "Simple, fast reporting for Jharkhand with map location and one-tap status tracking.",
     view_map: "View Map",
   },
   hi: {
@@ -66,7 +67,8 @@ const dictionaries: Record<Locale, Record<string, string>> = {
     english: "अंग्रेज़ी",
     hindi: "हिंदी",
     welcome_title: "नागरिक समस्याएँ तुरंत दर्ज करें",
-    welcome_sub: "झारखंड के लिए सरल, तेज़ रिपोर्टिंग — मानचित्र स्थान और एक-टैप ट्रैकिंग सहित।",
+    welcome_sub:
+      "झारखंड के लिए सरल, तेज़ रिपोर्टिंग — मानचित्र स्थान और एक-टैप ट्रैकिंग सहित।",
     view_map: "मानचित्र देखें",
   },
 };
@@ -78,7 +80,7 @@ export function getInitialLocale(): Locale {
 }
 
 export function tFor(locale: Locale) {
-  return (key: keyof typeof dictionaries["en"]) =>
+  return (key: keyof (typeof dictionaries)["en"]) =>
     dictionaries[locale][key] ?? key;
 }
 
