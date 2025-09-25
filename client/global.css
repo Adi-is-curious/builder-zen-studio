@@ -112,4 +112,14 @@
   h2 { font-size: 1rem; }
   h3 { font-size: 0.95rem; }
   .text-xs { font-size: 0.75rem; }
+
+  /* Achievement gentle float animation */
+  @keyframes ach-float {
+    0% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-6px) scale(1.02); }
+    100% { transform: translateY(0) scale(1); }
+  }
+  .ach-anim {
+    animation: ach-float 6s ease-in-out infinite;
+  }
 }
