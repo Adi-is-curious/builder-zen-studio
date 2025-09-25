@@ -71,26 +71,27 @@ export default function Index() {
     </span>
   );
 
-  const achievements = [
-    {
-      id: "a1",
-      title: "Road Fixed in Kanke",
-      desc: "Local community validated a repair near Kanke market.",
-      impact: "Reduced travel time by 20%",
-    },
-    {
-      id: "a2",
-      title: "Streetlights Restored",
-      desc: "Citizens reported multiple faulty lights; repairs completed.",
-      impact: "Improved safety at night",
-    },
-    {
-      id: "a3",
-      title: "Clean-up Drive",
-      desc: "Community-led initiative cleared the drainage issue.",
-      impact: "Reduced flooding in monsoon",
-    },
-  ];
+  const [achievements, setAchievements] = useState(() => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const { listAchievements } = require("@/lib/localDB");
+      return listAchievements();
+    } catch (e) {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    const handler = () => {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const { listAchievements } = require("@/lib/localDB");
+        setAchievements(listAchievements());
+      } catch (e) {}
+    };
+    window.addEventListener("storage", handler);
+    return () => window.removeEventListener("storage", handler);
+  }, []);
 
   return (
     <AppLayout>
