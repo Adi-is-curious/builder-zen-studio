@@ -105,16 +105,26 @@ export default function Report() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    const payload = {
-      photo: photo?.name ?? null,
-      desc,
-      category: cat,
-      urgent,
-      anonymous: anon,
-      location: pos,
-    };
-    console.log("submit-issue", payload);
-    alert("Issue saved locally (stub). Integrate backend to persist.");
+    try {
+      // Persist locally until Supabase is connected
+      // Using require to avoid ESM import cycles during HMR in this environment
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const { addIssue } = require("@/lib/localDB");
+      const newIssue = addIssue({
+        title: cat,
+        description: desc,
+        category: cat,
+        urgent,
+        anonymous: anon,
+        photo: photo?.name ?? null,
+        location: pos ?? undefined,
+      });
+      alert("Issue saved locally: " + newIssue.id);
+      window.location.href = "/community";
+    } catch (err) {
+      console.error(err);
+      alert("Failed to save issue locally");
+    }
   };
 
   return (
