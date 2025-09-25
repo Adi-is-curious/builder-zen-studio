@@ -5,6 +5,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Leaflet base styles via CDN to avoid local fs allowlist */
+@import url("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+
 @layer base {
   /**
    * Tailwind CSS theme
