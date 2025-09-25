@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import React, { useEffect, useMemo, useState } from "react";
 import AppLayout from "@/components/common/AppLayout";
 import { tFor, getInitialLocale, type Locale } from "@/lib/i18n";
 import { Link } from "react-router-dom";
