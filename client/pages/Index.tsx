@@ -152,13 +152,14 @@ export default function Index() {
 
           <div className="-mx-4 overflow-x-auto px-4">
             <div className="flex gap-3">
-              {achievements.map((a) => (
+              {achievements.map((a, idx) => (
                 <motion.article
                   key={a.id}
                   initial={shouldReduceMotion ? undefined : { opacity: 0, y: 6 }}
                   animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                   transition={{ duration: 0.45 }}
-                  className="min-w-[220px] flex-shrink-0 rounded-xl border bg-white p-3 shadow-sm"
+                  className={`min-w-[220px] flex-shrink-0 rounded-xl border bg-white p-3 shadow-sm ${!shouldReduceMotion ? 'ach-anim' : ''}`}
+                  style={!shouldReduceMotion ? { animationDelay: `${idx * 1.8}s` } : undefined}
                   aria-labelledby={`ach-${a.id}`}
                 >
                   <div className="flex items-center justify-between">
