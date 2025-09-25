@@ -4,6 +4,7 @@ import { tFor, getInitialLocale, type Locale } from "@/lib/i18n";
 import { Link } from "react-router-dom";
 import { MapPinned } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import { listAchievements } from "@/lib/localDB";
 
 interface Issue {
   id: string;
