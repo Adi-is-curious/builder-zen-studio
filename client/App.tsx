@@ -8,6 +8,9 @@ import NotFound from "./pages/NotFound";
 import Report from "./pages/Report";
 import Community from "./pages/Community";
 import Profile from "./pages/Profile";
+import Login from "./pages/Login";
+import Redeem from "./pages/Redeem";
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +25,9 @@ const App = () => (
           <Route path="/report" element={<Report />} />
           <Route path="/community" element={<Community />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/redeem" element={<Redeem />} />
+          <Route path="/admin" element={<Admin />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
