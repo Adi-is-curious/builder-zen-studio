@@ -3,7 +3,17 @@ import AppLayout from "@/components/common/AppLayout";
 import { getInitialLocale, tFor, type Locale } from "@/lib/i18n";
 import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
 import type { LeafletMouseEvent } from "leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
 
 const CATEGORIES = ["pothole", "garbage", "streetlight", "water", "drainage", "encroachment"] as const;
 
