@@ -1,7 +1,4 @@
-import "./global.css";
-
 import { Toaster } from "@/components/ui/toaster";
-import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -33,25 +30,4 @@ const App = () => (
   </QueryClientProvider>
 );
 
-(() => {
-  const container = document.getElementById("root");
-  if (!container) return;
-
-  // Avoid calling createRoot multiple times during HMR or double imports.
-  // Store the root on the container to reuse it if present.
-  const anyContainer = container as any;
-  if (anyContainer.__reactRoot) {
-    try {
-      anyContainer.__reactRoot.render(<App />);
-    } catch (e) {
-      // If render fails, recreate the root cleanly.
-      const root = createRoot(container);
-      anyContainer.__reactRoot = root;
-      root.render(<App />);
-    }
-  } else {
-    const root = createRoot(container);
-    anyContainer.__reactRoot = root;
-    root.render(<App />);
-  }
-})();
+export default App;
