@@ -6,8 +6,18 @@ import { useEffect, useState } from "react";
 
 export default function BottomNav() {
   const [locale, setLocale] = useState<Locale>("en");
+  const [animateReward, setAnimateReward] = useState(false);
   useEffect(() => setLocale(getInitialLocale()), []);
   const t = tFor(locale);
+
+  useEffect(() => {
+    const handler = () => {
+      setAnimateReward(true);
+      setTimeout(() => setAnimateReward(false), 1200);
+    };
+    window.addEventListener("coins-earned", handler as any);
+    return () => window.removeEventListener("coins-earned", handler as any);
+  }, []);
 
   const items = [
     { to: "/", label: t("home"), icon: Home },
