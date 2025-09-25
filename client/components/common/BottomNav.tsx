@@ -43,7 +43,13 @@ export default function BottomNav() {
               }
               end={to === "/"}
             >
-              <Icon className="h-5 w-5" />
+              {to === '/redeem' ? (
+                <span className={cn("relative inline-flex items-center justify-center", animateReward && "animate-bounce") }>
+                  <Icon className="h-5 w-5" />
+                </span>
+              ) : (
+                <Icon className="h-5 w-5" />
+              )}
               <span>{label}</span>
             </NavLink>
           </li>
