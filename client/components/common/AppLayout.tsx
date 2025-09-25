@@ -21,15 +21,17 @@ export default function AppLayout({ children }: { children: ReactNode }) {
     <div className="min-h-screen bg-gradient-to-b from-background to-accent/20 pb-16">
       <header className="sticky top-0 z-20 border-b bg-white/90 px-4 py-3 backdrop-blur dark:bg-neutral-900/80">
         <div className="mx-auto flex max-w-3xl items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-md bg-primary" aria-hidden />
+          <div className="flex items-center gap-3">
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets%2Fec21c3a5f2654d4c9fcfe3a3507286f1%2F6306aa3619034b7bbb6f404ffef8c472?format=webp&width=200"
+              alt="Government of Jharkhand emblem"
+              className="h-10 w-10 rounded-full border-2 border-white/30 bg-white/10 object-cover"
+            />
             <div>
               <div className="text-sm font-semibold tracking-wide text-primary uppercase">
                 {t("app_name")}
               </div>
-              <div className="text-[10px] text-neutral-500">
-                Government of Jharkhand
-              </div>
+              <div className="text-[10px] text-neutral-500">Government of Jharkhand</div>
             </div>
           </div>
           <LanguageToggle key={version} />
